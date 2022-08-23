@@ -1,5 +1,5 @@
 pub mod quick_sort;
-
+pub mod heap_sort;
 
 
 
