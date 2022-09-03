@@ -208,8 +208,7 @@ impl<T> List<T>
                     }
                 } else {
                     node_a = Some(a);
-                    //panic!("{}", n);
-                    //m -= 1;
+                    
                 }
             }
         }
