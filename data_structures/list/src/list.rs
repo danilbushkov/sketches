@@ -136,7 +136,7 @@ impl<T> List<T>
         }
         let middle = (begin + end) / 2;
         let (mut node_a, next) = Self::merge_sort(begin, middle, node);
-        let (mut node_b, next_list) = Self::merge_sort(middle+1, end, next);
+        let (mut node_b, next) = Self::merge_sort(middle+1, end, next);
 
 
         
@@ -241,7 +241,7 @@ impl<T> List<T>
             }
             
         }
-        (start, next_list)
+        (start, next)
     }
 
     
