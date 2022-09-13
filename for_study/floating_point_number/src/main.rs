@@ -6,15 +6,62 @@ fn main() {
 
     let m: u32 = 1 << 31;
 
-    let a: u32 = 0b1_10000001_11111111111111111111111;
+    let a: u32 = 0b1_01111111_11111111111111111111111;
 
-    println!("{:}", binary_to_f64(a));
+    println!("{:}", b32_to_f64(a));
+    println!("{:b}", f64_to_b32(b32_to_f64(a)));
 
-    
 
 }
 
-fn binary_to_f64(binary_number: u32) -> f64 {
+fn f64_to_b32(number: f64) -> u32 {
+    let sign = number.signum();
+    let mut number = number.abs();
+
+    let mut exponent: i32 = 128;
+
+    if number >= 1.0 {
+        while number >= 1.0 {
+            number /= 2.0;
+            exponent +=1;
+        }
+    } else if number < 0.5 {
+        while number < 0.5 {
+            number *= 2.0;
+            exponent -=1;
+        }
+    }
+    let mut fraction: u32 = 0;
+    for _ in 0..22 {
+        number *= 2.0;
+        if number > 1.0 {
+            number -= 1.0;
+            fraction = fraction + 1;
+        } 
+        fraction = fraction << 1;
+    } 
+    number *= 2.0;
+    if number > 0.0 {
+        fraction = fraction + 1;
+    } 
+
+    let sign: u32 = if sign > 0.0 {
+        0
+    } else {
+        1 << 31
+    };
+    
+
+    let exponent = (exponent as u32) << 23;
+    
+
+    sign | exponent | fraction
+}
+
+
+
+
+fn b32_to_f64(binary_number: u32) -> f64 {
     let sign = sign(binary_number);
     let exponent = exponent(binary_number);
     let fraction = fraction(binary_number);
