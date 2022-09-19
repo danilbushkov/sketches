@@ -3,18 +3,16 @@ use floating_point_number::b32_to_f64;
 use std::env;
 use std::io;
 
+const ACCURACY: usize = 8;
+
+
 fn main() {
 
 
-    // let m: u32 = 1 << 31;
-
-    // let a: u32 = 0b1_01111111_11111111111111111111111;
-
-    // println!("{:}", b32_to_f64(a));
-    // println!("{:b}", f64_to_b32(b32_to_f64(a)));
+    
     let args: Vec<String> = env::args().collect();
 
-    //b32 or f64, two
+    
     let mut arg1 = &"".to_string();
     let mut arg2 = &"".to_string();
     if args.len() > 1 {
@@ -29,8 +27,7 @@ fn main() {
     } else {
         one_num(arg1);
     }
-    //println!("Searching for {}", query);
-    //println!("In file {}", file_path);
+    
 
 }
 
@@ -53,13 +50,14 @@ fn two_nums(arg: &String) {
                 match num2.parse::<f64>() {
                     Ok(n2) => {
                         println!("A:");
-                        println!("{:}", n1);
+                        println!("{}", n1);
                         println!("{:b}", f64_to_b32(n1));
                         println!("B:");
-                        println!("{:}", n2);
+                        println!("{}", n2);
                         println!("{:b}", f64_to_b32(n2));
                         println!("Result:");
-                        println!("{:}", n1/n2);
+                        println!("{}", f_fmt(n1/n2, ACCURACY));
+                        println!("{}", n1/n2);
                         println!("{:b}", f64_to_b32(n1/n2));
                         println!("---------------------------------------------");
                     },
@@ -80,13 +78,14 @@ fn two_nums(arg: &String) {
                     Ok(n2) => {
                         println!("A:");
                         println!("{:b}", n1);
-                        println!("{:}", b32_to_f64(n1));
+                        println!("{}", b32_to_f64(n1));
                         println!("B:");
                         println!("{:b}", n2);
-                        println!("{:}", b32_to_f64(n2));
+                        println!("{}", b32_to_f64(n2));
                         println!("Result:");
                         let result = b32_to_f64(n1)/b32_to_f64(n2);
-                        println!("{:}", result);
+                        println!("{}", f_fmt(result, ACCURACY));
+                        println!("{}", result);
                         println!("{:b}", f64_to_b32(result));
                         println!("---------------------------------------------");
                     },
@@ -115,7 +114,8 @@ fn one_num(arg: &String) {
     if arg == "f64" {
         match input.parse::<f64>() {
             Ok(n) => {
-                println!("{:}", n);
+                println!("{}", f_fmt(n, ACCURACY));
+                println!("{}", n);
                 println!("{:b}", f64_to_b32(n));
                 println!("---------------------------------------------");
             },
@@ -127,7 +127,8 @@ fn one_num(arg: &String) {
         match u32::from_str_radix(&input, 2) {
             Ok(n) => {
                 println!("{:b}", n);
-                println!("{:}", b32_to_f64(n));
+                println!("{}", f_fmt(b32_to_f64(n), ACCURACY));
+                println!("{}", b32_to_f64(n));
                 println!("---------------------------------------------");
             },
             Err(e) => {
@@ -137,4 +138,18 @@ fn one_num(arg: &String) {
     }
 }
 
+
+fn f_fmt(num: f64, accuracy: usize) -> String {
+    let mut num = num;
+    let mut exp: isize = 0;
+    if num.abs() >= 10.0 {
+        num = num/10.0;
+        exp += 1;
+    } else if num.abs() < 0.0 {
+        num = num * 10.0;
+        exp += 1;
+    }
+
+    format!("{:.*}e{}", accuracy, num, exp)
+}
 
