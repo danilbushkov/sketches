@@ -51,14 +51,14 @@ fn two_nums(arg: &String) {
                     Ok(n2) => {
                         println!("A:");
                         println!("{}", n1);
-                        println!("{:b}", f64_to_b32(n1));
+                        println!("{:032b}", f64_to_b32(n1));
                         println!("B:");
                         println!("{}", n2);
-                        println!("{:b}", f64_to_b32(n2));
+                        println!("{:032b}", f64_to_b32(n2));
                         println!("Result:");
                         println!("{}", f_fmt(n1/n2, ACCURACY));
                         println!("{}", n1/n2);
-                        println!("{:b}", f64_to_b32(n1/n2));
+                        println!("{:032b}", f64_to_b32(n1/n2));
                         println!("---------------------------------------------");
                     },
                     Err(e) => {
@@ -77,16 +77,16 @@ fn two_nums(arg: &String) {
                 match u32::from_str_radix(&num2, 2) {
                     Ok(n2) => {
                         println!("A:");
-                        println!("{:b}", n1);
+                        println!("{:032b}", n1);
                         println!("{}", b32_to_f64(n1));
                         println!("B:");
-                        println!("{:b}", n2);
+                        println!("{:032b}", n2);
                         println!("{}", b32_to_f64(n2));
                         println!("Result:");
                         let result = b32_to_f64(n1)/b32_to_f64(n2);
                         println!("{}", f_fmt(result, ACCURACY));
                         println!("{}", result);
-                        println!("{:b}", f64_to_b32(result));
+                        println!("{:032b}", f64_to_b32(result));
                         println!("---------------------------------------------");
                     },
                     Err(e) => {
@@ -116,7 +116,7 @@ fn one_num(arg: &String) {
             Ok(n) => {
                 println!("{}", f_fmt(n, ACCURACY));
                 println!("{}", n);
-                println!("{:b}", f64_to_b32(n));
+                println!("{:032b}", f64_to_b32(n));
                 println!("---------------------------------------------");
             },
             Err(e) => {
@@ -126,7 +126,7 @@ fn one_num(arg: &String) {
     } else {
         match u32::from_str_radix(&input, 2) {
             Ok(n) => {
-                println!("{:b}", n);
+                println!("{:032b}", n);
                 println!("{}", f_fmt(b32_to_f64(n), ACCURACY));
                 println!("{}", b32_to_f64(n));
                 println!("---------------------------------------------");
