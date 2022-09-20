@@ -5,7 +5,7 @@ pub fn f64_to_b32(number: f64) -> u32 {
     let mut exponent: i32 = 128;
 
     if number >= 1.0 {
-        while number > 1.0 {
+        while number >= 1.0 {
             number /= 2.0;
             exponent +=1;
         }
@@ -19,14 +19,14 @@ pub fn f64_to_b32(number: f64) -> u32 {
     let mut fraction: u32 = 0;
     for _ in 0..22 {
         number *= 2.0;
-        if number > 1.0 {
+        if number >= 1.0 {
             number -= 1.0;
             fraction = fraction + 1;
         } 
         fraction = fraction << 1;
     } 
     number *= 2.0;
-    if number > 0.0 {
+    if number >= 1.0 {
         fraction = fraction + 1;
     } 
 
